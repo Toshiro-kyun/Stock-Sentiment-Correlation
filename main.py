@@ -258,7 +258,6 @@ def plot_graphs(combined_data, stock_name, lag: int =0):
     fig.legend(loc='upper left', bbox_to_anchor=(0.1,0.9))
     plt.show()
 
-# Merge sentiment and 
 """Main Code"""
 if __name__ == "__main__":
     print(SEPERATOR)
