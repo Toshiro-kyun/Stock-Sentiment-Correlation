@@ -1,14 +1,3 @@
-"""Settings"""
-START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d')
-END_DATE = datetime.now().strftime('%Y-%m-%d')
-
-STOCK = "NVDA"
-PAGES = 5
-MAX_LAG = 5
-
-"""Constants"""
-SEPERATOR = "-" * 200
-
 """Libaries"""
 # Standard libraries
 import os
@@ -34,6 +23,17 @@ import matplotlib.pyplot as plt
 # Statistics libraries
 from scipy import stats
 from statsmodels.tsa.stattools import grangercausalitytests
+
+"""Settings"""
+START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d')
+END_DATE = datetime.now().strftime('%Y-%m-%d')
+
+STOCK = "TSLA"
+PAGES = 5
+MAX_LAG = 5
+
+"""Constants"""
+SEPERATOR = "-" * 200
 
 """Functions"""
 # Print pandas dataframe overview
