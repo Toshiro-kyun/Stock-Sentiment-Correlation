@@ -20,10 +20,10 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
   ````
   START_DATE = "2025-01-01"         # Starting date in YYYY-MM-DD format
   END_DATE = "2025-02-01"           # End date in YYYY-MM-DD format
-  
   STOCK = "TSLA"                    # Stock abbreviation
   PAGES = 1                         # Number of pages to fetch from News API
   MAX_LAG = 5                       # Maximum lag to consider
+  VERBOSE = True                    # Whether to display tables and graphs
   ````
 
 ## Notes
