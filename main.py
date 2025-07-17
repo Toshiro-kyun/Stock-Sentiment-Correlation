@@ -3,7 +3,7 @@
 import os
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import requests
 from dotenv import load_dotenv
@@ -27,10 +27,10 @@ from statsmodels.tsa.stattools import grangercausalitytests
 """Settings"""
 START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d')
 END_DATE = datetime.now().strftime('%Y-%m-%d')
-
 STOCK = "TSLA"
 PAGES = 5
 MAX_LAG = 5
+VERBOSE = True
 
 """Constants"""
 SEPERATOR = "-" * 200
@@ -175,7 +175,7 @@ def correlation_coef_statistics(stock_data, sentiment_data, stats_methods, max_l
     if add_granger:
         r_values, p_values = {}, {}
         granger_df = pd.DataFrame({"Stock_data": stock_data, "Sentiment_data": sentiment_data}).dropna()
-        granger_results = grangercausalitytests(granger_df, maxlag=max_lag, verbose=False)
+        granger_results = grangercausalitytests(granger_df, maxlag=min(max_lag, 5), verbose=False)
     
         for lag in range(1, max_lag + 1):
             ftest_result = granger_results[lag][0]['ssr_ftest']
@@ -261,6 +261,7 @@ def plot_graphs(combined_data, stock_name, lag: int =0):
 """Main Code"""
 if __name__ == "__main__":
     print(SEPERATOR)
+
     # Load .env for news api-key
     load_dotenv()
 
@@ -286,11 +287,13 @@ if __name__ == "__main__":
         ("Kendaltau", stats.kendalltau)
     ]
 
+    add_granger = True
+
     stats_data = correlation_coef_statistics(stock_data=combined_data["Close"] , 
                                               sentiment_data= combined_data["Sentiment"], 
                                               stats_methods= stats_methods,
                                               max_lag= MAX_LAG,
-                                              add_granger= False)
+                                              add_granger= add_granger)
     
     #  Plot statistical data
     plot_stats_data(stats_data=stats_data, stock_name= stock_name)
