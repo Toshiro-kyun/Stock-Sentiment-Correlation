@@ -9,7 +9,17 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
   NEWS_API_KEY = "YOUR NEWS-API KEY HERE"
   ````
 - Insert your settings into settings.py
+  ````
+  START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d') # Starting date in YYYY-MM-DD format
+  END_DATE = datetime.now().strftime('%Y-%m-%d')                               # End date in YYYY-MM-DD format
+  
+  STOCK = "TSLA"                                                               # Stock abbreviation
+  PAGES = 5                                                                    # Number of pages to fetch from News API
+  MAX_LAG = 5                                                                  # Maximum lag to consider
+  ````
 - Run main.py
+  ````
+  python3 main.py
 
 
 ## Notes:
