@@ -9,6 +9,15 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
   NEWS_API_KEY = "YOUR NEWS-API KEY HERE"
   ````
 - Insert your settings into settings.py
+
+- Run main.py
+  ````
+  python3 main.py
+  
+  ````
+
+## Settings
+
   ````
   START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d') # Starting date in YYYY-MM-DD format
   END_DATE = datetime.now().strftime('%Y-%m-%d')                               # End date in YYYY-MM-DD format
@@ -17,13 +26,10 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
   PAGES = 5                                                                    # Number of pages to fetch from News API
   MAX_LAG = 5                                                                  # Maximum lag to consider
   ````
-- Run main.py
-  ````
-  python3 main.py
 
-
-## Notes:
-- Only 100 requests per day can be made to NewsAPI with a free account 
+## Notes
+- Only 100 requests per day can be made to NewsAPI with a free account
+  For interpretation
 
 ## Interpretation
 If lag > 0 and p < 0.05, there is a statistically significant correlation between Stock Sentiment and Stock Price -- Likely that Stock Sentiment leads Stock Price in n days\
