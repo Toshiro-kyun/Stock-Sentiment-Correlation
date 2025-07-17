@@ -1,5 +1,7 @@
 # Correlation Analysis of Stock Sentiment on Stock Prices
-<ins>A tool of analysis to determine whether Stock Sentiment is correlated to Stock Price.</ins> This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and then calculates various correlation scores in relation to the Stock Price. Shoutout to: https://github.com/mar-antaya/nvda-sentiment
+<ins>A tool of analysis to determine whether Stock Sentiment is correlated to Stock Price.</ins> 
+
+This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and then calculates various correlation scores in relation to the Stock Price. Shoutout to: https://github.com/mar-antaya/nvda-sentiment
 
 ## Usage
 - Insert your NewsAPI key into a .env file. Create your API key here: https://newsapi.org
