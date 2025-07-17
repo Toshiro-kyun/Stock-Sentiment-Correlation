@@ -268,19 +268,19 @@ if __name__ == "__main__":
     init()
 
     # Fetch Stock name and Stock data
-    stock_name, stock_data = fetch_stock_name_data(stock = STOCK, start_date=START_DATE, end_date=END_DATE)
+    stock_name, stock_data = fetch_stock_name_data(stock = STOCK, start_date=START_DATE, end_date=END_DATE, verbose=VERBOSE)
 
     # Fetch news
-    news_data = fetch_stock_news(stock_name= stock_name, start_date=START_DATE, end_date=END_DATE, pages=PAGES)
+    news_data = fetch_stock_news(stock_name= stock_name, start_date=START_DATE, end_date=END_DATE, pages=PAGES, verbose=VERBOSE)
 
     # Sentiment analysis
-    news_data = sentiment_analysis(news_data=news_data, stock_name=stock_name)
+    news_data = sentiment_analysis(news_data=news_data, stock_name=stock_name, verbose=VERBOSE)
     
     # Aggregate sentiment dataframe
-    sentiment_data = aggregate_day_sentiment(news_data=news_data, stock_name=stock_name)
+    sentiment_data = aggregate_day_sentiment(news_data=news_data, stock_name=stock_name, verbose=VERBOSE)
 
     # Combined data
-    combined_data = merge_data(stock_data=stock_data, sentiment_data=sentiment_data, stock_name=stock_name)
+    combined_data = merge_data(stock_data=stock_data, sentiment_data=sentiment_data, stock_name=stock_name, verbose=VERBOSE)
 
     # Apply statistical techniques to find significance with time-lag
     stats_methods = [
@@ -296,7 +296,8 @@ if __name__ == "__main__":
                                               stats_methods= stats_methods,
                                               stock_name= stock_name,
                                               max_lag= MAX_LAG,
-                                              add_granger= add_granger)
+                                              add_granger= add_granger,
+                                              verbose=VERBOSE)
     
     #  Plot statistical data
     plot_stats_data(stats_data=stats_data, stock_name= stock_name)
