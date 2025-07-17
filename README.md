@@ -28,6 +28,7 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
 
 ## Notes
 - Only 100 requests per day can be made to NewsAPI with a free account
+- Granger Causality is automatically added - can only be computed for lag=5 
 
 ## Interpretation
 - If p < 0.05 - Statistically Significant Correlation between Stock Sentiment & Stock Price 
