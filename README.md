@@ -29,7 +29,7 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
 
 ## Notes
 - Only 100 requests per day can be made to NewsAPI with a free account
-  For interpretation
+- For interpretation:
 
 ## Interpretation
 If lag > 0 and p < 0.05, there is a statistically significant correlation between Stock Sentiment and Stock Price -- Likely that Stock Sentiment leads Stock Price in n days\
