@@ -2,11 +2,9 @@
 # Standard libraries
 import os
 import pandas as pd
-import numpy as np
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 import requests
 from dotenv import load_dotenv
+from colorama import init, Fore, Style
 
 # Stock prices libraries
 import yfinance as yf
@@ -25,12 +23,7 @@ from scipy import stats
 from statsmodels.tsa.stattools import grangercausalitytests
 
 """Settings"""
-START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d')
-END_DATE = datetime.now().strftime('%Y-%m-%d')
-STOCK = "TSLA"
-PAGES = 5
-MAX_LAG = 5
-VERBOSE = True
+from settings import START_DATE, END_DATE, STOCK, PAGES, MAX_LAG, VERBOSE
 
 """Constants"""
 SEPERATOR = "-" * 200
@@ -54,6 +47,7 @@ def fetch_stock_name_data(stock, start_date, end_date, verbose: bool =True):
     stock_data['Date'] = pd.to_datetime(stock_data["Date"]).dt.date
 
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} Stock Dataframe" + Style.RESET_ALL)
         pd_view(df=stock_data)
 
     return stock_name, stock_data
@@ -97,6 +91,7 @@ def fetch_stock_news(stock_name, start_date, end_date, pages: int, verbose: bool
         news_data = pd.concat([news_data, new_news_data])
 
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} News Dataframe" + Style.RESET_ALL)
         pd_view(df=news_data)
 
     return news_data
@@ -125,7 +120,7 @@ def get_sentiment_score(text, analyzer):
     return score['compound']
 
 # Sentiment analysis
-def sentiment_analysis(news_data, verbose: bool =True):
+def sentiment_analysis(news_data, stock_name, verbose: bool =True):
     # Preprocessing steps
     download_nltk()
     preprocess_headlines(news_data=news_data)
@@ -135,30 +130,33 @@ def sentiment_analysis(news_data, verbose: bool =True):
     news_data['Sentiment'] = news_data['Cleaned_headline'].apply(get_sentiment_score, args=(analyzer,))
     
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} News-Sentiment Dataframe" + Style.RESET_ALL)
         pd_view(df= news_data)
 
     return news_data
 
 # Aggregate sentiments into pandas dataframe
-def aggregate_day_sentiment(news_data, verbose: bool =True):
+def aggregate_day_sentiment(news_data, stock_name, verbose: bool =True):
     aggregated_news_data = news_data.groupby('Date')['Sentiment'].sum().reset_index()
 
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} Aggregated Sentiment Dataframe" + Style.RESET_ALL)
         pd_view(df= aggregated_news_data)
 
     return aggregated_news_data
 
 # Merge stock prices and sentiment scores
-def merge_data(stock_data, sentiment_data, verbose: bool =True):
+def merge_data(stock_data, sentiment_data, stock_name, verbose: bool =True):
     merged_data = pd.merge(stock_data, sentiment_data, left_on="Date", right_on="Date", how="outer")
 
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} Merged Dataframe" + Style.RESET_ALL)
         pd_view(df= merged_data)
 
     return merged_data
 
 # Employ time-lagged statistical methods
-def correlation_coef_statistics(stock_data, sentiment_data, stats_methods, max_lag: int, add_granger: bool = False, verbose: bool =True):
+def correlation_coef_statistics(stock_data, sentiment_data, stats_methods, stock_name, max_lag: int, add_granger: bool = False, verbose: bool =True):
     stats_data = pd.DataFrame()
     stats_data["lag"] = range(-max_lag, max_lag + 1)
 
@@ -186,6 +184,7 @@ def correlation_coef_statistics(stock_data, sentiment_data, stats_methods, max_l
         stats_data["Granger--pval"] = stats_data["lag"].map(p_values)
 
     if verbose:
+        print(Fore.BLUE + "==> " + Fore.GREEN + f"{stock_name} Stastical-Values Dataframe" + Style.RESET_ALL)
         pd_view(df= stats_data)
 
     return stats_data
@@ -217,7 +216,7 @@ def plot_stats_data(stats_data, stock_name):
     subplt2.set_title("Other values")
     subplt2.axhline(y=0, color="r", linestyle="--")
 
-    fig.suptitle("Statisitcal Significance of Sentiment on Stock Price per Lag Interval")
+    fig.suptitle(f"Statisitcal Significance of Sentiment on {stock_name} Stock Price per Lag Interval")
     plt.show()
 
 # Plot sentiment and stock price movement
@@ -265,6 +264,9 @@ if __name__ == "__main__":
     # Load .env for news api-key
     load_dotenv()
 
+    # Init colorama
+    init()
+
     # Fetch Stock name and Stock data
     stock_name, stock_data = fetch_stock_name_data(stock = STOCK, start_date=START_DATE, end_date=END_DATE)
 
@@ -272,13 +274,13 @@ if __name__ == "__main__":
     news_data = fetch_stock_news(stock_name= stock_name, start_date=START_DATE, end_date=END_DATE, pages=PAGES)
 
     # Sentiment analysis
-    news_data = sentiment_analysis(news_data=news_data)
+    news_data = sentiment_analysis(news_data=news_data, stock_name=stock_name)
     
     # Aggregate sentiment dataframe
-    sentiment_data = aggregate_day_sentiment(news_data=news_data)
+    sentiment_data = aggregate_day_sentiment(news_data=news_data, stock_name=stock_name)
 
     # Combined data
-    combined_data = merge_data(stock_data=stock_data, sentiment_data=sentiment_data)
+    combined_data = merge_data(stock_data=stock_data, sentiment_data=sentiment_data, stock_name=stock_name)
 
     # Apply statistical techniques to find significance with time-lag
     stats_methods = [
@@ -292,13 +294,14 @@ if __name__ == "__main__":
     stats_data = correlation_coef_statistics(stock_data=combined_data["Close"] , 
                                               sentiment_data= combined_data["Sentiment"], 
                                               stats_methods= stats_methods,
+                                              stock_name= stock_name,
                                               max_lag= MAX_LAG,
                                               add_granger= add_granger)
     
     #  Plot statistical data
     plot_stats_data(stats_data=stats_data, stock_name= stock_name)
 
-    # Plot Stock Price and Sentiment over time
+    # Plots of Stock Price and Sentiment over time
 
     #   Without time-lag
     plot_graphs(combined_data=combined_data, stock_name=stock_name)
