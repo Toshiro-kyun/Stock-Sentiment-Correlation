@@ -8,7 +8,7 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
   ````
   NEWS_API_KEY = "YOUR NEWS-API KEY HERE"
   ````
-- Insert your settings into settings.py
+- Insert your settings into settings.py. Refer to the settings section below.
 
 - Run main.py
   ````
