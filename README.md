@@ -18,12 +18,12 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
 ## Settings
 
   ````
-  START_DATE = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m-%d') # Starting date in YYYY-MM-DD format
-  END_DATE = datetime.now().strftime('%Y-%m-%d')                               # End date in YYYY-MM-DD format
+  START_DATE = "2025-01-01"         # Starting date in YYYY-MM-DD format
+  END_DATE = "2025-02-01"           # End date in YYYY-MM-DD format
   
-  STOCK = "TSLA"                                                               # Stock abbreviation
-  PAGES = 5                                                                    # Number of pages to fetch from News API
-  MAX_LAG = 5                                                                  # Maximum lag to consider
+  STOCK = "TSLA"                    # Stock abbreviation
+  PAGES = 1                         # Number of pages to fetch from News API
+  MAX_LAG = 5                       # Maximum lag to consider
   ````
 
 ## Notes
