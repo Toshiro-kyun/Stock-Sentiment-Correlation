@@ -1,9 +1,9 @@
 # Correlation Analysis of Stock Sentiment on Stock Prices
-A tool of analysis to determine whether Stock Sentiment is correlated to Stock Price. This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and then calculates various correlation scores in relation to the Stock Price.
+A tool of analysis to determine whether Stock Sentiment is correlated to Stock Price. This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and then calculates various correlation scores in relation to the Stock Price. Shoutout to: 
 
 ## Usage
-- Insert your NewsAPI key into a .env file. Create your API key here: https://newsapi.org\
-- Insert your settings into settings.py\
+- Insert your NewsAPI key into a .env file. Create your API key here: https://newsapi.org
+- Insert your settings into settings.py
 - Run main.py
 
 
