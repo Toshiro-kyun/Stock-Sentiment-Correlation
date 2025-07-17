@@ -12,8 +12,7 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
 
 - Run main.py
   ````
-  python3 main.py
-  
+  main.py 
   ````
 
 ## Settings
@@ -29,11 +28,11 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
 
 ## Notes
 - Only 100 requests per day can be made to NewsAPI with a free account
-- For interpretation:
 
 ## Interpretation
-If lag > 0 and p < 0.05, there is a statistically significant correlation between Stock Sentiment and Stock Price -- Likely that Stock Sentiment leads Stock Price in n days\
-If lag < 0 and p < 0.05, there is a statistically significant correlation between Stock Sentiment and Stock Price -- Likely that Stock Price leads Stock Sentiment in n days\
-If p > 0.05, there is no statistically significant correlation
+- If p < 0.05 - Statistically Significant Correlation between Stock Sentiment & Stock Price 
+    - Lag > 0: Stock Sentiment leads Stock Price in {lag} days
+    - Lag < 0: Stock Price leads Stock Sentiment in {lag} days
+- If p > 0.05 - No Statistically Significant Correlation between Stock Sentiment & Stock Price 
 
 
