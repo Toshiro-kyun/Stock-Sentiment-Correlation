@@ -36,4 +36,4 @@ This project uses the NewsAPI to rate Stock sentiment using vaderSentiment and t
     - Lag < 0: Stock Price leads Stock Sentiment in {lag} days
 - If p > 0.05 - No Statistically Significant Correlation between Stock Sentiment & Stock Price 
 
-Completed during __2025/07__ [^1].
+Completed during 2025/07[^1].
